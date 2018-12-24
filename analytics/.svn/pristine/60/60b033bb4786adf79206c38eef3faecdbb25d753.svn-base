@@ -1,0 +1,105 @@
+<div class="scrollBar" ng-controller="LatchToLatchAnalysis">
+    <div class="col-sm-12">
+        <div class="row">
+            <div> </div>
+        </div>
+        <div class="row">
+            <div class="row">
+                <div class="jumbotron">
+                <div class="container">
+                <div class="col-sm-2 text-center">
+                </div>
+                <div class="col-sm-3">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Filter options</div>
+                        <form>
+                            <div class="form-group">
+                                <label for="minSlack" class="control-label">Min Slack</label>
+                                <input id="minSlack" type="text" name="minSlack" class="form-control input-sm mrgn-bttm-sm" ng-model="filterMinSlack"  ng-model-options="{ updateOn: 'blur' }" placeholder="Filter min slack" /><br /> 
+                                <label for="maxSlack" class="control-label">Max Slack</label>
+                                <input id="maxSlack" type="text" name="maxSlack" class="form-control input-sm mrgn-bttm-sm" ng-model="filterMaxSlack"  ng-model-options="{ updateOn: 'blur' }" placeholder="Filter max slack" /><br /> 
+
+                                <label for="toPins" class="control-label">To Pins</label>
+                                <input id="toPins" type="text" name="toPins" class="form-control input-sm mrgn-bttm-sm" ng-model="filterToPins"  ng-model-options="{ updateOn: 'blur' }" placeholder="Filter to pins" /><br /> 
+                                <label for="fromPins" class="control-label">From Pins</label>
+                                <input id="fromPins" type="text" name="fromPins" class="form-control input-sm mrgn-bttm-sm" ng-model="filterFromPins"  ng-model-options="{ updateOn: 'blur' }" placeholder="Filter from pins" /><br /> 
+
+                                <label for="srcDefBoxes" class="control-label">Src Def Boxes</label>
+                                <input id="srcDefBoxes" type="text" name="srcDefBoxes" class="form-control input-sm mrgn-bttm-sm" ng-model="filterSrcDefBoxes"  ng-model-options="{ updateOn: 'blur' }" placeholder="Filter def boxes" /><br /> 
+                                <label for="snkDefBoxes" class="control-label">Snk Def Boxes</label>
+                                <input id="snkDefBoxes" type="text" name="snkDefBoxes" class="form-control input-sm mrgn-bttm-sm" ng-model="filterSnkDefBoxes"  ng-model-options="{ updateOn: 'blur' }" placeholder="Filter def boxes" /><br /> 
+
+                                <button type="submit" class="btn btn-primary btn-sm " ng-click="reEvaluate()">Filter</button>
+                            </div>
+                        </form>
+                    </div>  
+                </div>  
+                <div class="col-sm-1">
+                </div>
+                <div class="col-sm-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Report summary</div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped" ng-model="lat2LatData">
+                                <tr> <th>Min Slack</th>            <td><center>{{lat2LatData[0].DATA.MIN_SLACK}}</center></td> </tr>
+                                <tr> <th>Max Slack</th>            <td><center>{{lat2LatData[0].DATA.MAX_SLACK}}</center></td> </tr>
+                                <tr> <th>FOM</th>                  <td><center>{{lat2LatData[0].DATA.TOTAL_FOM}}</center></td> </tr>
+                                <tr> <th>Lat-Lat FOM</th>          <td><center>{{lat2LatData[0].DATA.TOTAL_LAT2LAT_FOM}}</center></td> </tr>
+                                <tr> <th>Selected Min Slack</th>   <td><center>{{lat2LatData[0].DATA.CHOSEN_MIN_SLACK}}</center></td> </tr>
+                                <tr> <th>Selected Max Slack</th>   <td><center>{{lat2LatData[0].DATA.CHOSEN_MAX_SLACK}}</center></td> </tr>
+                                <tr> <th>FOM in range</th>         <td><center>{{lat2LatData[0].DATA.FOM_IN_RANGE}}</center></td> </tr>
+                                <tr> <th>Lat-Lat FOM in range</th> <td><center>{{lat2LatData[0].DATA.LAT2LAT_FOM_IN_RANGE}}</center></td> </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-2 text-center">
+                </div>
+                </div>  <!-- div container -->
+                </div>  <!-- div jumbotron -->
+            </div>  <!-- div row -->
+            <div class="row">
+                <div class="col-sm-1 text-center">
+                </div>
+                <div class="col-sm-4 text-center">
+                    <nvd3 id="lat2latSrcGrpCnt" options="lat2latSrcGrpCntOptions" data="srcGrpCntToDisplay"> </nvd3>
+                </div>
+                <div class="col-sm-2 text-center">
+                </div>
+                <div class="col-sm-4 text-center">
+                    <nvd3 id="lat2latSrcGrpFom" options="lat2latSrcGrpFomOptions" data="srcGrpFOMToDisplay"> </nvd3>
+                </div>
+                <div class="col-sm-1 text-center">
+                </div>
+            </div>  <!-- div row -->
+            <div class="row">
+                <div class="col-sm-1 text-center">
+                </div>
+                <div class="col-sm-4 text-center">
+                    <nvd3 id="lat2latSnkGrpCnt" options="lat2latSnkGrpCntOptions" data="snkGrpCntToDisplay"> </nvd3>
+                </div>
+                <div class="col-sm-2 text-center">
+                </div>
+                <div class="col-sm-4 text-center">
+                    <nvd3 id="lat2latSnkGrpFom" options="lat2latSnkGrpFomOptions" data="snkGrpFOMToDisplay"> </nvd3>
+                </div>
+                <div class="col-sm-1 text-center">
+                </div>
+            </div>  <!-- div row -->
+            <div class="row">
+                <div class="col-sm-1 text-center">
+                </div>
+                <div class="col-sm-4 text-center">
+                    <nvd3 id="lat2latSrcSnkGrpCnt" options="lat2latSrcSnkGrpCntOptions" data="srcSnkGrpCntToDisplay"> </nvd3>
+                </div>
+                <div class="col-sm-2 text-center">
+                </div>
+                <div class="col-sm-4 text-center">
+                    <nvd3 id="lat2latSrcSnkGrpFom" options="lat2latSrcSnkGrpFomOptions" data="srcSnkGrpFOMToDisplay"> </nvd3>
+                </div>
+                <div class="col-sm-1 text-center">
+                </div>
+            </div>  <!-- div row -->
+        </div>  <!-- div row -->
+    </div>  <!-- div col-sm-12 -->
+</div>  <!-- div scrollBar -->    

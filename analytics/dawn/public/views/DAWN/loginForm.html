@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<script>
+    var test_function = function(creds) {
+        console.log("(D):  inside function with creds=" + creds.username);
+    }
+</script>
+
+<div class = "portal">
+    <form class = "loginCenter" name="dawnLogin" ng-controller="DawnLoginCtrl" ng-submit="dawnLoginFnc(creds)" novalidate>
+        <h2> Welcome to DAWN </h2>
+        <br/>
+        <p class="error"> {{login_error_msg}}</p>
+        <br/>
+        <label for="inetID">IntranetID:</label>
+        <!--<input type="text" id="inetID" ng-model="creds.inetid">-->
+        <input type="text" id="inetID" ng-model="creds.username">
+        <br/>
+        <label for="inetPwd">Password:</label>
+        <!--<input type="password" id="inetPwd" ng-model="creds.inetpwd">-->
+        <input type="password" id="inetPwd" ng-model="creds.password">
+        <br/>
+	<!-- TODO: we will make a different button -->
+        <button class="bigButton" type="submit">Login</button>
+    </form>
+</div>
+

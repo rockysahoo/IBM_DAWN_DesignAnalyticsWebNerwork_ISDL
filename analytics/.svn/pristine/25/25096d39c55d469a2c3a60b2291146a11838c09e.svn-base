@@ -1,0 +1,178 @@
+/* Update History: Please add a description of your update to this file here
+10/14/15  aparasur  Moved this section here from app.js to keep BB view processing separate
+12/14/15  bsahoo    Added the new view to memory and walltime 
+01/07/16  bsahoo    Added userSelYear var for taking the year as dynamically for both memory and walltime  
+*/
+getConnectionDetails = function(){
+      console.log("Establishing couch connetion ...")
+  //  var myagent = new agentkeepalive({
+  //   maxSockets: 50
+  // , maxKeepAliveRequests: 0
+  // , maxKeepAliveTime: 30000
+  // });
+
+//   var http = require('http');
+//   http.globalAgent.maxSockets = 100;
+// var couchDBViews = require('./app/couchDBViews');
+// var agentkeepalive = require('agentkeepalive');
+// var agent = couchDBViews.getConnectionDetails(agentkeepalive);
+// console.log('ewqqe');
+// router.get('/memory', function(req, res) {
+//    console.log("(D):  get couch for memory. ");
+//    couchDBViews.getMemory(req, res, agent);
+// });
+// router.get('/walltime', function(req, res) {
+//    console.log("(D):  get couch for walltime "); 
+//    couchDBViews.getWalltime(req, res, agent);
+// });
+
+      var cloudant = {
+             url : "http://abusual.btv.ibm.com:5999" // TODO: Update
+             //url : "https://aparasur:ap15rilfool@aparasur.cloudant.com"
+               // url : "https://orequencutiverembetreero:f3MilTb54omqiH8o6K5reVXU@aparasur.cloudant.com" 
+               // /http://abusual.btv.ibm.com:5999/aarthi/_design/desbbvs/_view/bonnRoute_14.1_memory_2015?group=true          
+      };
+      //node library nano 
+      var nano = require('nano')(cloudant.url);
+      //var bbdb = nano.db.use('bigbrotherstuff');
+      //var bbdb = nano.db.use('aarthi');
+      var bbdb = nano.db.use('bigbrotherdb');
+      console.log(bbdb.toString);
+      return bbdb;
+}
+   
+exports.getMemory = function(request, response) {
+   var bbdb = getConnectionDetails(); 
+   console.log("Big Brother DB Memory request ...")
+   var dbdata = [];
+   var str;
+   //bbdb.get('_design/views555/_view/app_walltime', function (err, body) {
+   var url = "_design/bbviews/_view/"
+         + request.query.userSelection
+         + "?group=true";
+   console.warn("URL: " + url);
+              
+   //bbdb.get('_design/desbbvs/_view/bonnRoute_14.1_memory_2015?group=true', function (err, body) {
+   bbdb.get(url, function (err, body) {
+      console.log('inside...');
+      if (!err) {       
+         body.rows.forEach(function(doc) {
+            dbdata.push({name: doc.key, memory:doc.value});
+         });
+         console.log(dbdata);
+
+         response.json(dbdata);
+      } else {
+         console.log("Error while fetching memory ...");
+         console.log(err);
+      }
+   });
+//});
+};
+
+exports.getWalltime = function(request, response) {
+   var bbdb = getConnectionDetails(); 
+   console.log("Big Brother DB Walltime request ...")
+   var dbdata = [];
+   var str;
+   var url = "_design/bbviews/_view/"
+         + request.query.userSelection
+         + "?group=true";
+   console.warn("URL: " + url);
+
+   //bbdb.get('_design/desbbvs/_view/bonnRoute_14.1_walltime_2015?group=true', function (err, body) {
+   bbdb.get(url, function (err, body) {
+      if (!err) {       
+         body.rows.forEach(function(doc) {
+            dbdata.push({name: doc.key, walltime:doc.value.avgwt});
+         });
+         console.log(dbdata);
+
+         response.json(dbdata);
+      } else {
+         console.log("Error while fetching walltime ...");
+         process.on('uncaughtException', function(err) {
+            // handle the error safely
+            console.log(err)
+         })
+         console.log(err);
+      }
+   });
+//});
+};
+
+exports.getMemoryChart = function(request, response) {
+   var bbdb = getConnectionDetails(); 
+   console.log("Big Brother DB Memory Chart request ..." + request.selectedTool)  //undefined
+   var dbdata = [];
+   console.log("request.query.userSelection---> " + request.query.userSelection); 
+   var str;
+   var userSel = request.query.userSelection ;
+   var retVal = userSel.split('*') ;
+   var userSelectOnBox=retVal[0]; 
+   var  retValue=userSelectOnBox.split('_');
+   var userSelYear=retValue[2];
+    //http://abusual.btv.ibm.com:5999/bigbrotherdb/_design/bbviews/_view/AppName_14.1_2015_memory_month?reduce=true&group_level=3&startkey=["designName","2015-01"]&endkey=["designName","2015-12"]
+   var url = "_design/bbviews/_view/"
+   + retVal[0]
+   + "_memory_month?reduce=true&group_level=3&startkey=[\"" + retVal[1] + "\",\""+userSelYear+"-01\"]&endkey=[\"" + retVal[1] + "\",\""+userSelYear+"-12\"]";
+   
+   console.log("mem URL: " + url);
+   bbdb.get(url, function (err, body) {
+      if (!err) {       
+         body.rows.forEach(function(doc) {
+            var retKeys = doc.key ;
+             dbdata.push({y:retKeys[1], a: doc.value.max, b: doc.value.avg, c: doc.value.min});
+         });
+         console.log(dbdata);
+
+         response.json(dbdata);
+      } else {
+         console.log("Error while fetching memory chart values ...");
+         process.on('uncaughtException', function(err) {
+            // handle the error safely
+            console.log(err)
+         })
+         console.log(err);
+      }
+   });
+//});
+};
+
+exports.getWalltimeChart = function(request, response) {
+   var bbdb = getConnectionDetails(); 
+   console.log("Big Brother DB Walltime Chart request ...")
+   var dbdata = [];
+   console.log("request.query.userSelection---> " + request.query.userSelection);
+   var str;
+   var userSel = request.query.userSelection ;
+   var retVal = userSel.split('*') ;
+   var userSelectOnBox=retVal[0];
+   var retValue=userSelectOnBox.split('_');
+   var userSelYear=retValue[2];
+   //http://abusual.btv.ibm.com:5999/bigbrotherdb/_design/bbviews/_view/AppName_14.1_2015_walltime_month?reduce=true&group_level=3&startkey=["designName","2015-01"]&endkey=["designName","2015-12"]
+   var url = "_design/bbviews/_view/"
+   + retVal[0]
+   + "_walltime_month?reduce=true&group_level=3&startkey=[\"" + retVal[1] + "\",\""+userSelYear+"-01\"]&endkey=[\"" + retVal[1] + "\",\""+userSelYear+"-12\"]";
+   console.log('wall chart' + url);
+   bbdb.get(url, function (err, body) {
+   //bbdb.get('_design/desbbvs/_view/bonnRoute_14.1_c03_2015_memory_month?group=true', function (err, body) {
+      if (!err) {       
+         body.rows.forEach(function(doc) {
+            var retKeys = doc.key ;
+            dbdata.push({y:retKeys[1], a:doc.value.maxwt, b: doc.value.avgwt, c: doc.value.minwt});
+         });
+         console.log(dbdata);
+
+         response.json(dbdata);
+      } else {
+         console.log("Error while fetching memory chart values ...");
+         process.on('uncaughtException', function(err) {
+            // handle the error safely
+            console.log(err)
+         })
+         console.log(err);
+      }
+   });
+//});
+};

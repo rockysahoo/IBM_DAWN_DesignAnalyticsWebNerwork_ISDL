@@ -1,0 +1,75 @@
+ <head>
+	<!--Noise specific includes go here to avoid cluttering DAWN's index.html-->
+	<link rel="stylesheet" href="stylesheets/DAWN-style.css">
+	<link rel="stylesheet" href="stylesheets/MSF-style.css">
+</head>
+<!--
+<div class="topBar" ng-include src ="'views/DAWN/topBar.html'" ng-controller="topCtrl">
+</div>  
+-->
+
+  <!-- 
+  <div class = "main" ng-include src= "'views/MSFStatus/landingPage.html'" >
+   -->
+<style>
+label
+    {
+      width: 160px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+input
+    {
+      width: 300px;
+      vertical-align: middle;
+    }
+.valueItems
+    {
+      display: inline-block;
+      vertical-align: middle;
+    }      
+</style>
+
+<div class = "selectionModal" >
+    <div class="modal-title" >
+       MSF Status
+    </div>
+
+    <div class = "modal-body">
+        <br>
+        <form>
+            <div class="form-group">
+                <label for="selectDesign" class="control-label">Design</label>
+                <select id="selectDesign" ng-model="designChosen" class="form-control input-lg mrgn-bttm-md" ng-change="changeDesign()" ng-init="designChosen=currDesign">
+                    <option ng-repeat="option in MSFData.designList" value="{{option.name}}">{{option.name}}</option>
+                </select>
+            </div>  
+            <hr>
+            <br>
+            <div class="form-group">
+                <label for="selectRole" class="control-label">Role</label>
+                <select id="selectRole" class="form-control input-lg mrgn-bttm-md" ng-model="roleChosen" ng-change="changeRole()" ng-init="roleChosen=currRole">
+                    <option ng-repeat="option in MSFData.roleList" value="{{option.name}}">{{option.name}}</option>
+                </select>
+            </div>  
+            <hr>
+            <br>
+            <div class="form-group">
+                <label for="selectView" class="control-label">View</label>
+                <select id="selectView" class="form-control input-lg mrgn-bttm-md" ng-model="viewChosen" ng-init="viewChosen=currView">
+                     <option ng-repeat="option in MSFData.viewList" value="{{option.name}}">{{option.name}}</option>
+                </select>
+            </div>     
+             <hr>
+             <br>
+             <div>
+                 <!--
+                 <a ng-click ="changeApp()" class = "centerButton">
+                   Continue
+                 </a>
+                 -->
+                 <button type="submit" class="btn btn-primary btn-lg btn-block" ng-click="changeApp()">Continue</button>
+             </div>
+        </form>
+    </div>      
+</div>

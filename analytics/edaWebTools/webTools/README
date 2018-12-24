@@ -1,0 +1,15 @@
+############################ READ ME ##########################################
+# 
+# RW Taggart
+# 2015.4.10
+#
+# This directory is used for the SQLite webTools python package. We can rename 
+# this directory in the future if we wish. 
+#
+# This package is used to contain the general framework of the EDA python 
+# package. Specific applications can be built using this API.
+#
+# It will interface with server-DBMS, SQLite, JSON, etc.
+#
+###############################################################################
+

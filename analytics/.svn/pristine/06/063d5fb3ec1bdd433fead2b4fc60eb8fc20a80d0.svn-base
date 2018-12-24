@@ -1,0 +1,34 @@
+<div>
+    <center >
+        <form class="form-inline" role="form">
+            <div class="form-group row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <label for="selectDesign" class="col-md-4 control-label">Design</label>
+                            <select id="selectDesign" class="form-control input-lg mrgn-bttm-md" ng-model="designChosen" ng-change="changeDesign()" ng-init="initDesign()">
+                              <option ng-repeat="option in MSFData.designList" value="{{option.name}}">{{option.name}}</option>
+                            </select>
+                        </div>      
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <label for="selectRole" class="col-md-4 control-label">Role</label>
+                            <select id="selectRole" class="form-control input-lg mrgn-bttm-md" ng-model="roleChosen" ng-change="changeRole()" ng-init="initRole()">
+                              <option ng-repeat="option in MSFData.roleList" value="{{option.name}}">{{option.name}}</option>
+                            </select>
+                        </div>      
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <label for="selectView" class="col-md-4 control-label">View</label>
+                            <select id="selectView" class="form-control input-lg mrgn-bttm-md" ng-model="viewChosen" ng-change="changeApp()" ng-init="initView()">
+                              <option ng-repeat="option in MSFData.viewList" value="{{option.name}}">{{option.name}}</option>
+                          </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </center>
+</div>   

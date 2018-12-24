@@ -1,0 +1,53 @@
+<head>
+
+<style>
+label
+    {
+      width: 160px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+input
+    {
+      width: 300px;
+      vertical-align: middle;
+    }
+.valueItems
+    {
+      display: inline-block;
+      vertical-align: middle;
+    }
+</style>
+</head>
+
+<div class = "selectionModal">
+	<div class = "modal-title">
+		Timing Analyzer
+	</div>
+	<div class = "modal-body">
+        <form >
+            <div class="form-group">
+                <label for="endptEdit" class="control-label"> Endpoint report </label>
+                <input id="endptEdit" type="text" name="endPointReport" class="form-control input-lg mrgn-bttm-md" ng-model="sqlitefiles.endpt"  ng-model-options="{ updateOn: 'blur' }" placeholder="Enter path to sqlite file" required /><br /> 
+            </div>
+            <hr>
+            <br>
+            <div class="form-group">
+                <label for="compEdit"> Comprehensive report </label>
+                <input id="compEdit" type="text" name="compReport" class="form-control input-lg mrgm-bttm-md" ng-model="sqlitefiles.comp"  ng-model-options="{ updateOn: 'blur' }" placeholder="Enter path to sqlite file"  /><br /> 
+            </div>
+            <hr>
+            <br>
+            <div class="form-group">
+                <label for="checksEdit"> Checks report </label>
+                <input id="checksEdit" type="text" name="checksReport" class="form-control input-lg mrgm-bttm-md" ng-model="sqlitefiles.checks"  ng-model-options="{ updateOn: 'blur' }" placeholder="Enter path to sqlite file" /><br /> 
+            </div>
+            <hr>
+            <br>
+            <br>
+            <div> <center>
+                 <button type="submit" class="btn btn-primary btn-lg btn-block" ng-click="changeApp()">Continue</button>
+            </center> </div>
+        </form>
+	</div>
+</div>

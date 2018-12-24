@@ -1,0 +1,15 @@
+<head>
+	<!--Dusk specific includes go here to avoid cluttering DAWN's index.html-->
+	<link rel="stylesheet" href="stylesheets/test-style.css">
+</head>
+
+<div ng-include src ="'views/DAWN/topBar.html'" ng-controller="topCtrl">
+</div>
+<div class = "duskBackground">
+	<div class = "mainPage">
+		<p class = "DuskTitle">
+			This is a sample application
+		</p>
+		<div ui-chart="data"></div>
+	</div>
+</div>

@@ -1,0 +1,121 @@
+/* style.css
+ * This file provides css styles.
+ */
+
+ /*
+ *	#151520 is a very dark grey that looks like black but isn't as harsh.
+ */
+ body,html {
+	background-color: #3b4b54;
+	height: 100%;
+	width: 100%;
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	color: #151520;
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+	line-height: 1;
+}    
+
+.topBar{
+	margin-top: 0;
+	padding-top: 0;
+	padding-bottom: 10px;
+	background: linear-gradient(#777777, #151520);
+	color: white;
+}   
+
+.appStart{
+	background-color: white;
+	color: #151520;
+	font-size: 14px;
+    height: 95%;
+    width: 95%;
+	line-height: 1;
+	padding: 2% 2% 2% 2%;
+	margin: 2% 2% 2% 2%;
+}    
+.inlineDisplay{
+    display: inline;
+}
+.victimTable{
+    border: 1px solid #151520;
+    width: 90%;
+    height: 80%;
+    overflow-y: auto;
+	overflow-x: visible;
+	margin-left: 5%;
+}
+
+.sinkTable{
+    border: 1px solid #151520;
+    width: 90%;
+	height: 35%;
+	margin-left: 5%;
+}
+
+.aggsTable{
+    border: 1px solid #151520;
+    width: 90%;
+    height: 40%;
+    overflow: auto;
+	margin-left: 5%;
+}
+
+.leftTitle{
+	text-align: center;
+	 display: block;
+	font-size: 1.5em;
+	margin-before: 0.83em;
+	margin-after: 0.83em;
+	margin-start: 0;
+	margin-end: 0;
+	font-weight: bold; 
+}
+
+.main{
+	height: 100%;
+	width:  100%;
+	overflow: hidden;
+}
+
+.leftFrame {
+	float:left;
+	padding-top: 20px;
+	background-color: #FDFDFD; 
+	color: #151520;
+	overflow: auto;
+	height: 100%;
+	width: 35%;
+}
+
+.failing{
+	font-weight: bold;
+	color: red;
+}
+
+.rightFrame {
+	text-align: center; 
+	overflow: auto; 
+	height: 100%;
+	background-color: #FDFDFD;
+	border-left: thick solid #151520;
+	color: #151520;
+}
+
+.oneSinglePane{
+	height: 100%;
+	width: 100%;
+	background-color: #FDFDFD;
+	overflow: hidden;
+	padding-top: 3%;
+	padding-bottom: 3%;
+}
+
+.bigTable{
+	border: 1px solid #151520;
+    width: 90%;
+	height: 80%;
+	margin-left: 5%;
+}
+

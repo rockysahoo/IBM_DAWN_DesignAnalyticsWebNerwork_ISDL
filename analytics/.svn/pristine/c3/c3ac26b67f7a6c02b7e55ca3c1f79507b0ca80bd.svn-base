@@ -1,0 +1,16 @@
+<div class = "selectionModal">
+	<div class = "modal-title">
+		Noise Inspector
+	</div>
+	<div class = "modal-body">
+                <!-- <form ng-controller='runSelCtrl' >
+                    <label>View Developer Runs?<input type='checkbox' ng-model='runSel.isDev' ></label>
+                </form> -->
+		<div ui-grid-selection ui-grid="runsGrid" class="runsTable">
+		</div>
+		<br>
+		<a ng-click="changeApp()" class ="centerButton">
+			Select Run
+		</a>
+	</div>
+</div>

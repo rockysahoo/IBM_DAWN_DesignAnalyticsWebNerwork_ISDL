@@ -1,0 +1,140 @@
+<!-- Update History: Please add a description of your update to this file here
+* 09/29/15    aparasur    Initial
+* 12/18/15    bsahoo      Moved the text from second row to first row after the drop-down box and added the left arrow
+* 01/07/16    bsahoo      Removed the class
+* 01/18/16    bsahoo      Changed the functionality of drop down menu Tool,Release and Year.
+-->
+<head>
+	<!--Noise specific includes go here to avoid cluttering DAWN's index.html-->
+	<link rel="stylesheet" href="stylesheets/BigBrother-style.css">
+</head>
+<div ng-include src ="'views/DAWN/topBar.html'" ng-controller="topCtrl"></div>
+
+<body >
+<div class="container-fluid">
+	<div class="well well-md">
+		<div class="row-fluid">
+			<div class="row-md-height">
+
+						<ul class="nav nav-tabs">
+							<li>
+								<div class="dropdown">
+									<button class="btn btn-primary" type="button" id="menu1" data-toggle="dropdown"> {{selectTool}}
+										<span class="caret"></span>
+
+									</button>
+									<ul class="dropdown-menu scrollable-menu" role="menu" aria-labelledby="menu1"> 
+										<li ng-repeat="tool in tools">
+											<a tabindex="-1" href="#" ng-click="setMenuSelection($event, 'Tool' ,tool)" >{{tool}}</a>
+										</li>
+									</ul>
+								</div>
+							</li>
+							<li>
+								<div class="dropdown">
+									<button class="btn btn-primary" type="button" id="menu1" data-toggle="dropdown">{{selectRelease}}
+										<span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu  scrollable-menu" role="menu" aria-labelledby="menu1"> 
+										<li ng-repeat="release in releases">
+											<a tabindex="-1" href="#" ng-click="setMenuSelection($event, 'Release', release)" >{{release}}</a>
+										</li>
+									</ul>
+								</div>								 
+							</li>
+							<li>
+								<div class="dropdown">
+									<button class="btn btn-primary" type="button" id="menu1" data-toggle="dropdown">{{selectYear}}
+										<span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu  scrollable-menu" role="menu" aria-labelledby="menu1"> 
+										<li ng-repeat="year in years">
+											<a tabindex="-1" href="#" ng-click="setMenuSelection($event, 'Year', year)" >{{year}}</a>
+										</li>
+									</ul>
+								</div>
+							</li>
+
+						</li>
+						<li>
+							<div ng-show="isResultGrid" class="searchresults"> <p class="searchresults">Showing results for      <b><span class="resultTextStyle" ng-bind="results"></span></b></p> </div>
+						</li>
+						<li>
+                          <div ng-show="!isResultGrid"><br/>
+					      <p> <i class="fa fa-arrow-left"></i> Select all filters from the menu here to see memory and walltime for your design</p></div>
+					    </li>  
+				</ul>
+			</div> <!-- row height-->
+		</div> <!--row-fluid-->
+	</div><!-- well div -->
+ </div>
+ <div class="container-fluid">
+ 	<div class="well well-md">
+		<div class="row-fluid">
+			<div class="row-md-height">
+				<div class="col-md-2 col-md-height col-padding-overide" >
+					<div class="inside inside-full-height">
+						<div class="content" ng-include src = "'views/BigBrother/leftNav.html'"></div>
+					</div>
+				</div> <!-- column -->
+				<div class="col-md-10 col-md-height" ng-show="isResultGrid">
+					<div class="row" >
+						<div class="col-md-4 col-padding-overide">
+							<i ng-show="!isResultGrid" class="fa fa-5x fa-cog fa-spin"></i>
+							<div ng-show="isResultGrid" ui-grid="memoryGrid" ui-grid-selection ui-grid-resize-columns ></div>
+						 </div>
+						<div class="col-md-8">
+							<!-- <i ng-show="!isResultMemoryChart" class="fa fa-5x fa-cog fa-spin"></i> -->
+							<div ng-show="!isResultWalltimeChart"> <p> <i class="fa fa-arrow-left"></i> Select a row on the left to see average, max and min memory. </p> </div>
+							<div ng-show="isResultMemoryChart" id="memoryChartBull"></div> <!-- important change this to memoryChartBull -->
+						 </div>
+					</div>
+					<div class="row">
+						<div class="col-md-4 col-padding-overide">
+							<i ng-show="!isResultGrid" class="fa fa-5x fa-cog fa-spin"></i>
+							<div ng-show="isResultGrid" ui-grid="walltimeGrid" ui-grid-selection ui-grid-resize-columns ></div>
+						 </div>
+						<div class="col-md-8">
+							<!-- <i ng-show="!isResultWalltimeChart" class="fa fa-5x fa-cog fa-spin"></i> -->
+							<div ng-show="!isResultWalltimeChart"> <p> <i class="fa fa-arrow-left"></i> Select a row on the table to the left to see average, max and min memory. </p> </div>
+							<div ng-show="isResultWalltimeChart" id="walltimeChartBull"></div> <!-- important change this to walltimeChartBull -->
+						 </div>
+					</div>
+
+				</div> <!-- column -->
+				<div class="col-md-10 col-md-height" ng-show="!isResultGrid">
+					<p></i></p>
+				</div>
+			</div> <!-- row height-->
+		</div> <!--row-fluid-->
+	</div><!-- well div -->
+</div> <!--topmost container-fluid div -->
+
+
+<!--
+<div class="row">
+  <div class="row-sm-height">
+    <div class="col-xs-12 col-sm-6 col-sm-height">
+      <div class="inside">
+        <div class="content">asd<br><br><br><br><br><br><br></div>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-3 col-sm-height col-sm-top">
+      <div class="inside">
+        <div class="content">asd</div>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-2 col-sm-height col-sm-middle">
+      <div class="inside">
+        <div class="content">asd</div>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-1 col-sm-height col-sm-bottom">
+      <div class="inside">
+        <div class="content">asd</div>
+      </div>
+    </div>
+   </div>
+</div>
+-->
+</body>

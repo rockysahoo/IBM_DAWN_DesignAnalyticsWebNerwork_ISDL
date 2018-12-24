@@ -1,0 +1,48 @@
+<div class="topBar">
+    <div class = "homeButton">
+        <a ng-click="goHome()" class = "fa fa-home"></a>
+    </div>
+    <div class= "userButton" ng-controller="userDropDownCtrl" dropdown is-open="status.isopen">
+        <i id="userBtn" class="fa fa-user" dropdown-toggle ng-disabled="disabled"><span class="caret"></span></i>
+        <ul class="dropdown-menu" role="menu" auto-close="outsideClick"  data-aria-labeledby="userBtn">
+            <li role="menuitem">
+                <a>A thingy</a>
+<!--                <form action="#" >
+                    <label for="name">UserName:
+                        <input id="name" type="text"></label><br>
+                    <label for="pwd">Password:
+                        <input id="pwd" type="text"></label><br>
+                    <input type="submit" value="Log In!">
+                </form>-->
+            </li>
+            <li role="menuitem">This is another label Thingy.</li>
+            <li class="divider"></li>
+            <li role=menuitem">Hello! "{{currentUser}}"</li>
+            <li role="menuitem">This is under the divider</li>
+        </ul>
+
+        <!--
+        <ul class="dropdown-menu" role="menu" aria-labeledby="userBtn">
+            <li role="menuitem"><a href="#">Action</a></li>
+            <li role="menuitem"><a href="#">Action2</a></li>
+            <li role="menuitem"><a href="#">Action3</a></li>
+        </ul>
+        -->
+    </div>
+    <div class= "settingsButton" ng-controller="userSettingsCtrl" dropdown is-open="status.isopen">
+        <i id="usersettingBtn" class="fa fa-cog" dropdown-toggle ng-disabled="disabled"><span class="caret"></span></i>
+        <ul class="dropdown-menu" role="menu" aria-labeledby="usersettingBtn">
+            <li role="menuitem"><a>User:    ____ </a></li>
+            <li role="menuitem"><a>Project: ____ </a></li>
+            <li role="menuitem"><a>Unit:    ____ </a></li>
+            <li role="menuitem"><a>Macro:   ____ </a></li>
+            <li role="menuitem"><a>Lib:     ____ </a></li>
+            <li role="menuitem"><a>Level:   ____ </a></li>
+            <li role="menuitem"><a>View:    ____ </a></li>
+        </ul>
+    </div>
+    <p class ="title">
+        {{appTitle}}
+    </p>
+
+</div>

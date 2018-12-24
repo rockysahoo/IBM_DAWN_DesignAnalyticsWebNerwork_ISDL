@@ -1,0 +1,29 @@
+<!-- Update History: Please add a description of your update to this file here
+* 09/29/15    aparasur    Initial
+* 12/18/15    bsahoo      Added the new icon's on the second row first column
+-->
+
+<!-- <dl id="active" class="list-inline">
+    <dt class="selected"><a href="index.html">Resources</a><span class="label label-success">New</span></dt>
+    <dt><a href="blog.html">Versions</a><span class="label label-info">ComingSoon</span></dt>
+    <dt><a href="signup.html">OS</a><span class="label label-info">ComingSoon</span></dt>
+    <dt><a href="register.html">Runtime</a><span class="label label-info">ComingSoon</span></dt>
+    <dt><a href="timeline.html">Runs</a><span class="label label-info">ComingSoon</span></dt>
+    <dt><a href="forms.html">Users</a><span class="label label-info">ComingSoon</span></dt>
+    <dt><a href="typography.html">Designs</a><span class="label label-info">ComingSoon</span></dt>
+    <dt><a href="bootstrap-elements.html">Crashes</a><span class="label label-info">ComingSoon</span></dt>
+</dl>
+
+ -->
+<div > 
+<ul class="nav nav-pills nav-stacked">
+  <li class="active"><a></span><i class="fa fa-list" style="font-size:16px"></i> Resources</a></li>
+  <li><a></span><i class="fa fa-vimeo" style="font-size:16px"></i> Versions </a></li>
+  <li><a></span><i class="fa fa-diamond" style="font-size:16px;color:"></i> OS</a></li>
+  <li><a></span><i class="glyphicon glyphicon-dashboard" style="font-size:16px"></i> Runtime</a></li>
+  <li><a></span><i class="fa fa-play-circle" style="font-size:16px"></i> Runs</a></li>
+  <li><a></span><i class="fa fa-users fa-large" style="font-size:16px"></i> Users</a></li>
+  <li><a></span><i class="glyphicon glyphicon-folder-close" style="font-size:16px"></i> Designs</a></li>
+  <li><a></span><i class="fa fa-chain-broken" style="font-size:16px"></i> Crashes</a></li>
+</ul>
+</div>   

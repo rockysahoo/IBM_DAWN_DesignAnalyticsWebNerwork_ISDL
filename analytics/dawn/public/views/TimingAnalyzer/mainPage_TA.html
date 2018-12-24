@@ -1,0 +1,53 @@
+<head>
+	<!--Noise specific includes go here to avoid cluttering DAWN's index.html-->
+	<link rel="stylesheet" href="stylesheets/Timing-style.css">
+    <style>
+       .scrollBar {
+         max-width:1750px;
+         overflow-x: auto;
+         max-height:760px;
+         overflow-y: auto;
+       }
+    </style>
+    
+</head>
+<div ng-include src ="'views/DAWN/topBar.html'" ng-controller="topCtrl">
+</div>
+
+<div  ng-style="{'width':'100%', 'height':'100%', 'background-color':'white'}" > 
+     <section ng-controller = "TabController as tabctrl">
+        <div>
+        <ul class="nav nav-pills nav-justified nav-static-top">
+           <li ng-class="{ active:tabctrl.isSelected(1) }" > 
+               <a href ng-click="tabctrl.selectTab(1)">Summary</a>  </li> 
+           <li ng-class="{ active:tabctrl.isSelected(2) }" > 
+               <a href ng-click="tabctrl.selectTab(2)">Latch-Latch Analysis</a>  </li> 
+           <!--
+           <li ng-class="{ active:tabctrl.isSelected(3) }" > 
+               <a href ng-click="tabctrl.selectTab(3)">Gate/Net Analysis</a>  </li> 
+           -->
+        </ul>
+        </div>
+
+        <!-- Tab 1 -->
+        <div class="container-fluid" ng-show="tabctrl.isSelected(1)">
+          <div ng-include src ="'views/TimingAnalyzer/summaryAnal.html'">
+          </div>
+        </div>
+
+        <!-- Tab 2 -->
+        <div class="container-fluid" ng-show="tabctrl.isSelected(2)" >
+          <div ng-include src ="'views/TimingAnalyzer/lat2latAnal.html'">
+          </div>
+        </div>
+
+        <!-- Tab 3 -->
+        <!--
+        <div class="container-fluid" ng-show="tabctrl.isSelected(3)" >
+          <div ng-include src ="'views/TimingAnalyzer/gateNetAnal.html'">
+          </div>
+        </div>
+        -->
+     </section>
+</div>
+      

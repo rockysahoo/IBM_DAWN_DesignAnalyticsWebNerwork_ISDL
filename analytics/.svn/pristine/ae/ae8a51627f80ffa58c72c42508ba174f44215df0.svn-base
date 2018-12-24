@@ -1,0 +1,12 @@
+<div class="selectionModal">
+	<div class = "modal-title">
+		Dusk is Here
+	</div>
+	<div class = "modal-body">
+		<a ng-click="changeApp()">
+			<p class = "darkText">
+				Proceed
+			</p>
+		</a>
+	</div>
+</div>

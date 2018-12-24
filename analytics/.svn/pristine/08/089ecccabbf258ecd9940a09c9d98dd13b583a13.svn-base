@@ -1,0 +1,31 @@
+<div class="appStart" ng-controller='landingCtrl as ctrl'>
+  <br>
+  <div>
+    <h3> Select design </h3>
+    <form name="designForm">
+      <select name="designChosen" ng-model="designChosen" ng-change="changeDesign()">
+        <option ng-repeat="option in MSFData.designList" value="{{option.name}}">{{option.name}}</option>
+      </select>
+    </form>
+  </div>  
+  <hr>
+  <br>
+  <div>
+    <h3> Select role </h3>
+    <form name="roleForm">
+      <select name="roleChosen" ng-model="roleChosen" ng-init="roleChosen=MSFData.roleList[0].name">
+        <option ng-repeat="option in MSFData.roleList" value="{{option.name}}">{{option.name}}</option>
+      </select>
+    </form>
+  </div>  
+  <hr>
+  <br>
+  <div>
+    <h3> Application </h3>
+    <form name="viewForm">
+      <select name="viewChosen" ng-model="viewChosen" ng-change="changeApp()">
+        <option ng-repeat="option in MSFData.viewList" value="{{option.name}}">{{option.name}}</option>
+      </select>
+    </form>
+  </div>     
+</div>

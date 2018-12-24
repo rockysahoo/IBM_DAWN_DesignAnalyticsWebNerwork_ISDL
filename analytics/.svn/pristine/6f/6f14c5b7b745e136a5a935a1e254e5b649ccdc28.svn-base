@@ -1,0 +1,8 @@
+applications:
+- disk_quota: 1024M
+  host: EinsInspector
+  name: EinsInspector
+  path: .
+  domain: mybluemix.net
+  instances: 1
+  memory: 2G

@@ -1,0 +1,8 @@
+<head>
+    <!-- Noise Inspector 'Main' content. -->
+    <!--Noise specific includes go here to avoid cluttering DAWN's index.html-->
+    <link rel="stylesheet" href="stylesheets/Noise-style.css">
+</head>
+<div ng-include src ="'views/DAWN/topBar.html'" ng-controller="topCtrl"></div>
+<div class = "leftFrame" ng-include src="'views/NoiseInspector/leftFrame.html'"></div>
+<div class = "rightFrame" ng-include src = "'views/NoiseInspector/rightFrame.html'"></div>

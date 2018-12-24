@@ -1,0 +1,112 @@
+<head>
+	<link rel="stylesheet" href="stylesheets/MSF-style.css">
+    <style>
+       .scrollBar {
+         max-width:1650px;
+         overflow-x: auto;
+         max-height:700px;
+         overflow-y: auto;
+       }
+    </style>    
+</head>
+
+<div >
+    <div class="topBar" ng-include src ="'views/DAWN/topBar.html'" ng-controller="topCtrl">
+    </div>  
+
+    <div ng-style="{'background-color':'white'}" >
+        <div class="scrollBar">
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="jumbotron">
+                        <center >
+                            <form class="form-inline" role="form">
+                                <div class="form-group row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <div class="col-sm-4">
+                                                <label for="selectDesign" class="col-md-4 control-label">Design</label>
+                                                <select id="selectDesign" class="form-control input-lg mrgn-bttm-md" ng-model="designChosen" ng-change="changeDesign()" ng-init="initDesign()">
+                                                  <option ng-repeat="option in MSFData.designList" value="{{option.name}}">{{option.name}}</option>
+                                                </select>
+                                            </div>      
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-4">
+                                                <label for="selectRole" class="col-md-4 control-label">Role</label>
+                                                <select id="selectRole" class="form-control input-lg mrgn-bttm-md" ng-model="roleChosen" ng-change="changeRole()" ng-init="initRole()">
+                                                  <option ng-repeat="option in MSFData.roleList" value="{{option.name}}">{{option.name}}</option>
+                                                </select>
+                                            </div>      
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-4">
+                                                <label for="selectView" class="col-md-4 control-label">View</label>
+                                                <select id="selectView" class="form-control input-lg mrgn-bttm-md" ng-model="viewChosen" ng-change="changeApp()" ng-init="initView()">
+                                                  <option ng-repeat="option in MSFData.viewList" value="{{option.name}}">{{option.name}}</option>
+                                              </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </center>
+                    </div> <!-- div jumbotron -->
+                </div> <!-- div row -->
+
+                <div class="row">
+                    <div class="col-sm-4">
+                    </div>
+                    <div class="col-sm-4 ">
+                        <form class="form-inline" role="form">
+                                <div class="form-group">
+                                   <!-- <label for="selectHistoToPlot" class="col-md-4 control-label">Step</label> -->
+                                   <label for="selectHistoToPlot">Step</label>
+                                    <select id="selectHistoToPlot" class="form-control input-md mrgn-bttm-md" ng-model="keyChosen" ng-change="switchPlot()">
+                                       <option ng-repeat="option in jsonData" value="{{option.key}}">{{option.key}}</option>
+                                    </select>
+                                </div>
+                        </form>
+                    </div>
+                    <div class="col-sm-4">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                    </div>
+                    <div class="col-sm-6">
+                        <nvd3 id="msfSlackHisto" options="msfSlackHistoOptions" data="plotData" config="{refreshDataOnly: false, deepWatchDataDepth: 0}" > </nvd3>
+                    </div>
+                    <div class="col-sm-3">
+                    </div>
+                </div> <!-- div row -->
+            </div> <!-- div col-sm-12 -->
+        </div> <!-- div scrollBar -->
+    </div>  <!-- div ng-style -->
+</div>
+
+
+<!--
+    <div> 
+      <div class="row"> 
+        <center>
+            <div ng-style="{'background-color':'white'}" >
+              <div class="btn-group" uib-dropdown is-open="status.isopen">
+                  <button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
+                      {{titleChosen}} <span class="caret"></span>
+                  </button>
+                  <ul class="uib-dropdown-menu" role="menu" aria-labelledby="single-button">
+                      <li role="menuitem"> <span ng-repeat="option in MSFBarChartDataChoose" ng-click="changeChart(option.title)" class="caret">{{option.title}}</span>
+                      </li>
+                  </ul>
+                      <li  role="menuitem"> <span ng-repeat="option in MSFBarChartDataChoose" ng-click="changeChart(option.title)" class="caret">{{option.title}}</span>
+                  <select id="selectView" class="form-control input-lg mrgn-bttm-md" ng-model="titleChosen" ng-change="changeChart()">
+                      <option ng-repeat="option in MSFBarChartDataChoose" value="{{option.title}}">{{option.title}}</option>
+
+              </div>
+            </div>
+        </center> 
+      </div>
+    </div>
+</div>
+-->

@@ -1,0 +1,10 @@
+<head>
+	<!--Noise specific includes go here to avoid cluttering DAWN's index.html-->
+	<link rel="stylesheet" href="stylesheets/Timing-style.css">
+</head>
+<div ng-include src ="'views/DAWN/topBar.html'" ng-controller="topCtrl">
+</div>
+<div class = "leftFrame" ng-include src="'views/TimingAnalyzer/leftFrame_TA.html'">
+</div>
+<div class = "rightFrame" ng-include src="'views/TimingAnalyzer/rightFrame_TA.html'">
+</div>

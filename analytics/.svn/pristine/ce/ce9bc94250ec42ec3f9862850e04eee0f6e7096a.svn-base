@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<!-- Update History: Please add a description of your update to this file here
+10/13/15    aparasur    added controllers and directives for Big Brother
+10/20/15    aparasur    added Morris, Raphael and Angular-Morris libraries
+10/27/15    aparasur    Fixed reference to jQuery as jquery
+12/23/15    aparasur    Removed redundant bootstrap.css & bootstrap.js (bootstrap.min.css/bootstrap.min.js should suffice)
+-->
+
+<html>
+
+    <head>
+        <title>DAWN</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="shortcut icon" href="images/miniSun.png" type="image/png"></link>
+
+        <!-- Stylesheets -->
+        <link rel="styleSheet" href="bower_components/angular-ui-grid/ui-grid.min.css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"/>
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.css"/>
+        <link rel="stylesheet" href="bower_components/nvd3/build/nv.d3.min.css"/>
+        <link rel="stylesheet" href="bower_components/morris.js/morris.css"/>
+        <link rel="stylesheet" href="stylesheets/DAWN-style.css">
+        <link rel="stylesheet" href="stylesheets/Timing-style.css">
+        <link rel="stylesheet" href="stylesheets/MSF-style.css">
+        <link rel="stylesheet" href="bower_components/angularjs-datepicker/src/css/angular-datepicker.css" type="text/css" />
+
+        <!-- Front end frameworks and libraries-->
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="bower_components/angular-route/angular-route.js"></script>
+        <script src="bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="bower_components/d3/d3.min.js" charset="utf-8"></script>
+        <script src="bower_components/nvd3/build/nv.d3.min.js"></script>
+        <script src="bower_components/angular-nvd3/dist/angular-nvd3.min.js"></script>
+        <script src="bower_components/angular-nvd3/dist/angular-nvd3.js"></script>
+        <script src="bower_components/angular-ui-grid/ui-grid.min.js"></script>
+        <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+        <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+        <script src="bower_components/morris.js/morris.min.js"></script>
+        <script src="bower_components/raphael/raphael-min.js"></script>
+        <script src="bower_components/angular-morris-chart/src/angular-morris-chart.min.js"></script>
+        <script src="bower_components/angularjs-datepicker/src/js/angular-datepicker.js"></script>
+        <!--<script src="bower_components/angularjs-dropdown-multiselect/src/angular-dopdown-multiselect.js"></script>
+        <script src="bower_components/lodash/dist/lodash.js"></script> -->
+
+        <!--Dawn Controllers-->
+        <script src="Javascripts/Controllers/DAWN/controllers.js"></script>
+        <script src="Javascripts/Controllers/DAWN/portalCtrl.js"></script>
+        <script src="Javascripts/Controllers/DAWN/topCtrl.js"></script>
+        <script src="Javascripts/Controllers/DAWN/loginCtrl.js"></script>
+
+        <!--App Selection Controllers-->
+        <script src="Javascripts/Controllers/NoiseInspector/runSelCtrl.js"></script>
+	    <script src="Javascripts/Controllers/TimingAnalyzer/runSelCtrl_TA.js"></script>
+	    <script src="Javascripts/Controllers/MSFStatus/runSelCtrl_MSF.js"></script>
+        <script src="Javascripts/Controllers/Dusk/entryCtrl.js"></script>
+
+        <!--App Controllers-->
+        <script src="Javascripts/Controllers/NoiseInspector/mainCtrl.js"></script>
+	    <script src="Javascripts/Controllers/TimingAnalyzer/mainCtrl_TA.js"></script>
+	    <script src="Javascripts/Controllers/MSFStatus/mainCtrl_MSF.js"></script>
+        <script src="Javascripts/Controllers/Dusk/duskCtrl.js"></script>
+
+        <!--Router-->
+        <script src="Javascripts/Routes.js"></script>
+
+        <!--Service Controllers-->
+        <script src="Javascripts/Services/noiseSettings.js"></script>
+
+        <!--BigBrother App Controller and Directives starts-->
+        <script src="Javascripts/Controllers/BigBrother/bbCtrl.js"></script>
+        <!--BigBrother App Controller and Directives ends-->
+
+
+
+    </head>
+
+    <body ng-app="Router" ng-controller="AppController">
+        <!-- NOTE:  We can't stick this here because the top bar looks funny. However, this is where it belongs.-->
+<!--        <div ng-include src ="'views/DAWN/topBar.html'" ng-controller="topCtrl">
+        </div>-->
+        <div class="main" ng-view >
+        </div>
+    </body>
+
+</html>

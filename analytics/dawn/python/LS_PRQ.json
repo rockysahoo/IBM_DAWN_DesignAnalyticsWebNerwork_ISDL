@@ -1,0 +1,362 @@
+[
+  {
+    "values": [
+      {
+        "count": 79, 
+        "range": "[-429.0 to -386.1)"
+      }, 
+      {
+        "count": 40, 
+        "range": "[-386.1 to -343.2)"
+      }, 
+      {
+        "count": 97, 
+        "range": "[-343.2 to -300.3)"
+      }, 
+      {
+        "count": 175, 
+        "range": "[-300.3 to -257.4)"
+      }, 
+      {
+        "count": 27, 
+        "range": "[-257.4 to -214.5)"
+      }, 
+      {
+        "count": 55, 
+        "range": "[-214.5 to -171.6)"
+      }, 
+      {
+        "count": 278, 
+        "range": "[-171.6 to -128.7)"
+      }, 
+      {
+        "count": 213, 
+        "range": "[-128.7 to -85.8)"
+      }, 
+      {
+        "count": 742, 
+        "range": "[-85.8 to -42.9)"
+      }, 
+      {
+        "count": 902, 
+        "range": "[-42.9 to 0.0)"
+      }
+    ], 
+    "key": "150_SYN_Logic_Synthesis"
+  }, 
+  {
+    "values": [
+      {
+        "count": 3, 
+        "range": "[-21.0 to -18.9)"
+      }, 
+      {
+        "count": 0, 
+        "range": "[-18.9 to -16.8)"
+      }, 
+      {
+        "count": 1, 
+        "range": "[-16.8 to -14.7)"
+      }, 
+      {
+        "count": 1, 
+        "range": "[-14.7 to -12.6)"
+      }, 
+      {
+        "count": 1, 
+        "range": "[-12.6 to -10.5)"
+      }, 
+      {
+        "count": 0, 
+        "range": "[-10.5 to -8.4)"
+      }, 
+      {
+        "count": 7, 
+        "range": "[-8.4 to -6.3)"
+      }, 
+      {
+        "count": 1, 
+        "range": "[-6.3 to -4.2)"
+      }, 
+      {
+        "count": 7, 
+        "range": "[-4.2 to -2.1)"
+      }, 
+      {
+        "count": 5, 
+        "range": "[-2.1 to 0.0)"
+      }
+    ], 
+    "key": "420_PDS_Turbo_PlaceOpt"
+  }, 
+  {
+    "values": [
+      {
+        "count": 51, 
+        "range": "[-2248.0 to -2023.2)"
+      }, 
+      {
+        "count": 138, 
+        "range": "[-2023.2 to -1798.4)"
+      }, 
+      {
+        "count": 110, 
+        "range": "[-1798.4 to -1573.6)"
+      }, 
+      {
+        "count": 141, 
+        "range": "[-1573.6 to -1348.8)"
+      }, 
+      {
+        "count": 135, 
+        "range": "[-1348.8 to -1124.0)"
+      }, 
+      {
+        "count": 178, 
+        "range": "[-1124.0 to -899.2)"
+      }, 
+      {
+        "count": 160, 
+        "range": "[-899.2 to -674.4)"
+      }, 
+      {
+        "count": 401, 
+        "range": "[-674.4 to -449.6)"
+      }, 
+      {
+        "count": 2575, 
+        "range": "[-449.6 to -224.8)"
+      }, 
+      {
+        "count": 6168, 
+        "range": "[-224.8 to 0.0)"
+      }
+    ], 
+    "key": "515_Turbo_Clock_Opt"
+  }, 
+  {
+    "values": [
+      {
+        "count": 2, 
+        "range": "[-10.0 to -9.0)"
+      }, 
+      {
+        "count": 1, 
+        "range": "[-9.0 to -8.0)"
+      }, 
+      {
+        "count": 0, 
+        "range": "[-8.0 to -7.0)"
+      }, 
+      {
+        "count": 0, 
+        "range": "[-7.0 to -6.0)"
+      }, 
+      {
+        "count": 2, 
+        "range": "[-6.0 to -5.0)"
+      }, 
+      {
+        "count": 1, 
+        "range": "[-5.0 to -4.0)"
+      }, 
+      {
+        "count": 1, 
+        "range": "[-4.0 to -3.0)"
+      }, 
+      {
+        "count": 1, 
+        "range": "[-3.0 to -2.0)"
+      }, 
+      {
+        "count": 1, 
+        "range": "[-2.0 to -1.0)"
+      }, 
+      {
+        "count": 3, 
+        "range": "[-1.0 to 0.0)"
+      }
+    ], 
+    "key": "537_Turbo_Post_Clock_Cleanup"
+  }, 
+  {
+    "values": [
+      {
+        "count": 0, 
+        "range": "[-10.0 to -9)"
+      }, 
+      {
+        "count": 0, 
+        "range": "[-9 to -8)"
+      }, 
+      {
+        "count": 0, 
+        "range": "[-8 to -7)"
+      }, 
+      {
+        "count": 0, 
+        "range": "[-7 to -6)"
+      }, 
+      {
+        "count": 0, 
+        "range": "[-6 to -5)"
+      }, 
+      {
+        "count": 0, 
+        "range": "[-5 to -4)"
+      }, 
+      {
+        "count": 0, 
+        "range": "[-4 to -3)"
+      }, 
+      {
+        "count": 0, 
+        "range": "[-3 to -2)"
+      }, 
+      {
+        "count": 0, 
+        "range": "[-2 to -1)"
+      }, 
+      {
+        "count": 0, 
+        "range": "[-1 to 0)"
+      }
+    ], 
+    "key": "620_PDS_Turbo_LateModeOpt"
+  }, 
+  {
+    "values": [
+      {
+        "count": 1, 
+        "range": "[-7.0 to -6.3)"
+      }, 
+      {
+        "count": 0, 
+        "range": "[-6.3 to -5.6)"
+      }, 
+      {
+        "count": 0, 
+        "range": "[-5.6 to -4.9)"
+      }, 
+      {
+        "count": 2, 
+        "range": "[-4.9 to -4.2)"
+      }, 
+      {
+        "count": 1, 
+        "range": "[-4.2 to -3.5)"
+      }, 
+      {
+        "count": 0, 
+        "range": "[-3.5 to -2.8)"
+      }, 
+      {
+        "count": 0, 
+        "range": "[-2.8 to -2.1)"
+      }, 
+      {
+        "count": 0, 
+        "range": "[-2.1 to -1.4)"
+      }, 
+      {
+        "count": 2, 
+        "range": "[-1.4 to -0.7)"
+      }, 
+      {
+        "count": 1, 
+        "range": "[-0.7 to 0.0)"
+      }
+    ], 
+    "key": "710_PDS_EmPadding"
+  }, 
+  {
+    "values": [
+      {
+        "count": 3, 
+        "range": "[-77.0 to -69.3)"
+      }, 
+      {
+        "count": 1, 
+        "range": "[-69.3 to -61.6)"
+      }, 
+      {
+        "count": 3, 
+        "range": "[-61.6 to -53.9)"
+      }, 
+      {
+        "count": 0, 
+        "range": "[-53.9 to -46.2)"
+      }, 
+      {
+        "count": 20, 
+        "range": "[-46.2 to -38.5)"
+      }, 
+      {
+        "count": 7, 
+        "range": "[-38.5 to -30.8)"
+      }, 
+      {
+        "count": 18, 
+        "range": "[-30.8 to -23.1)"
+      }, 
+      {
+        "count": 27, 
+        "range": "[-23.1 to -15.4)"
+      }, 
+      {
+        "count": 199, 
+        "range": "[-15.4 to -7.7)"
+      }, 
+      {
+        "count": 424, 
+        "range": "[-7.7 to 0.0)"
+      }
+    ], 
+    "key": "810_Detailed_Routing"
+  }, 
+  {
+    "values": [
+      {
+        "count": 3, 
+        "range": "[-39.0 to -35.1)"
+      }, 
+      {
+        "count": 0, 
+        "range": "[-35.1 to -31.2)"
+      }, 
+      {
+        "count": 0, 
+        "range": "[-31.2 to -27.3)"
+      }, 
+      {
+        "count": 1, 
+        "range": "[-27.3 to -23.4)"
+      }, 
+      {
+        "count": 0, 
+        "range": "[-23.4 to -19.5)"
+      }, 
+      {
+        "count": 0, 
+        "range": "[-19.5 to -15.6)"
+      }, 
+      {
+        "count": 0, 
+        "range": "[-15.6 to -11.7)"
+      }, 
+      {
+        "count": 0, 
+        "range": "[-11.7 to -7.8)"
+      }, 
+      {
+        "count": 32, 
+        "range": "[-7.8 to -3.9)"
+      }, 
+      {
+        "count": 107, 
+        "range": "[-3.9 to 0.0)"
+      }
+    ], 
+    "key": "860_RAPIDS"
+  }
+]

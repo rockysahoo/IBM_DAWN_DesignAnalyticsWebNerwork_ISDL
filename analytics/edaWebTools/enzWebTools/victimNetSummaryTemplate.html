@@ -1,0 +1,39 @@
+<!-- Automatically generated HTML from servlet as response. -->
+<html>
+<head>
+    <title>{title}</title>
+    <!--  .trRed {{background-color: #A80000; color: white}} -->
+    <style>
+        p {{color: black; font-size: x-large}}
+        .trRed   {{color: red}}
+        .trRed a {{color: green}}
+        .trGreen {{bgcolor: green}}
+        .error {{color: red; font-size: large}}
+    </style>
+</head>
+<body>
+    <h2>{title}</h2>
+    <p id=0>
+            <form id="IDinfoForm">
+               Search Net: <input type="input" name="fNet" value=""/><br/>
+               Display Options: 
+               <input type="checkbox" name="netOpts" value="Noise Type"/>Noise Type (IH/IL)
+               <input type="checkbox" name="netOpts" value="Analysis Type"/>Analysis Type (P/D/S)
+               <input type="checkbox" name="netOpts" value="slack"/>Noise Slack
+               <input type="checkbox" name="netOpts" value="peak-area"/>Peak/Area
+               <input type="checkbox" name="netOpts" value="aggrs"/>Aggressors
+               <br/>
+               <button type="button" onclick="displaySearch()">Display Info!</button>
+            </form>
+        {input}
+    </p>
+    <p id=1>
+        <h3><b>Run Summary</b></h3>
+        Total Nets Analyzed:    {tnets}</br>
+        Total Failing Nets:  {fnets}</br>
+    </p>
+    <p id=2>
+        {table}
+    </p>
+</body>
+</html>

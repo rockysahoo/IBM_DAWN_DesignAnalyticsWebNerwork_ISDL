@@ -1,0 +1,22 @@
+<!-- Automatically generated HTML from servlet as response. -->
+<html>
+<head>
+    <title>{title}</title>
+    <style>
+        p {color: black; font-size: x-large}
+        .error {color: red; font-size: large}
+        <!-- th {position:fixed; padding:5px; top:0px} -->
+    </style>
+</head>
+<body>
+    <h2>{title}</h2>
+    <p>
+    <form id={form_id}>
+        {form}
+    </form>
+    {body}
+    <table border='{table_border}'>
+    
+    </p>
+</body>
+</html>

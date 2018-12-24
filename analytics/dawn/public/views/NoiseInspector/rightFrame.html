@@ -1,0 +1,18 @@
+
+<div class = "rightFrame">
+	<br>
+	<div class = "leftTitle">
+		Sinks of Victim Net: {{selectedNet.VictimName}}
+	</div>
+	<br>
+	<div ui-grid="sinkGrid" ui-grid-selection ui-grid-resize-columns class="sinkTable">
+	</div>
+	<br>
+	<hr>
+	<div class ="leftTitle">
+		Aggressors on Sink: {{selectedSink.SinkName}}
+	</div>
+	<br>
+	<div ui-grid="aggsOnSinkGrid" ui-grid-resize-columns class="aggsTable">
+	</div>
+</div>

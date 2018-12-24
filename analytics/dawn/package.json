@@ -1,0 +1,39 @@
+{
+  "name": "DAWN",
+  "version": "0.0.1",
+  "description": "A single portal to all EDA Analytics Initiatives",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "angular-route": "^1.4.2",
+    "body-parser": "~1.14.1",
+    "bower": "^1.4.1",
+    "cfenv": "1.0.x",
+    "express": "4.12.x",
+    "jsonfile": "^2.2.3",
+    "ldapjs": "^0.7.1",
+    "mysql": "^2.7.0",
+    "nano": "*",
+    "ng-grid": "^2.0.1",
+    "node-mysql": "^0.4.2",
+    "passport": "^0.3.0",
+    "passport-ldapauth": "^0.3.0",
+    "python-shell": "^0.2.0",
+    "requirejs": "^2.1.22",
+    "sqlite3": "^3.1.1",
+    "xml2js": "^0.4.15"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.x",
+    "grunt-contrib-jshint": "~0.7.2",
+    "grunt-contrib-uglify": "^0.4.0",
+    "grunt-contrib-concat": "^0.4.0",
+    "grunt-contrib-qunit": "^0.5.0",
+    "grunt-contrib-watch": "^0.6.1"
+  },
+  "repository": {},
+  "main": "app.js",
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,523 @@
+
+
+// This application uses express as it's web server
+// for more info, see: http://expressjs.com
+
+/* Update History: Please add a description of your update to this file here
+10/13/15  aparasur  added BigBrother db connection. Need to be moved separately
+10/14/15  nsathaye  LDAP authentication fixed
+10/14/15  aparasur  Moved BigBrother view processing to /app/CouchDBViews.js
+12/04/15  aparasur  Added http and https server listeners
+12/07/15  nsathaye  2-layer authentication: LDAP + Bluegroup validation 
+*/
+
+
+var express        = require('express'),
+    passport       = require('passport'),
+    ldapauthStrat  = require('passport-ldapauth');
+var PythonShell    = require('python-shell');
+var sqlite3        = require('sqlite3').verbose();
+//var jsonfile = require('jsonfile');
+//var util = require('util');
+
+var dawnRouter = express.Router();
+
+var router   = express.Router();
+
+//  TODO:  Stuff this router business in it's own folder/file.
+var sqlQueries     = require('./app/sqlQueries');
+var mysql          = require('./app/mysqlInterface');
+var pool           = mysql.initMySql();
+var ldapAuthModule = require('./app/ldapAuth');
+
+//------------------------------------------------------------------------------
+// The module DawnAuthenticator.js provides API for DAWN blugroup validation.
+//------------------------------------------------------------------------------
+var bluegroupAuthModule = require("./app/Auth/DawnAuthenticator.js");
+
+
+console.log("(D):  Starting up server.");
+
+//  TODO:  stuff this into routes/dbquery.js
+router.get('/vnets', function(req, res, next) {
+   console.log("(D):  get DB. Making request to DB.");
+	if (req.query) {
+      var runId = req.query.runId;
+      console.log("(D):  db nets query runId= " + runId);
+   }
+
+   var  victimNetQuery = sqlQueries.netsQuery;
+   mysql.executeQuery(pool, victimNetQuery, [runId], function(err, tuples) {
+      if (err) {
+         res.json({code: "100", status: "Could not connect to db. " + err});
+         return;
+      }
+
+      res.json(tuples);
+   });
+});
+
+//  TODO:  Stuff this into a noise specific route file.
+router.get('/sinks', function(req, res, next) {
+   console.log("(D):  get sinks DB. ");
+   //  Handle query parms
+   if (req.query) {
+      var vname = req.query.vname;
+	  var runId = req.query.runId;
+      console.log("(D):  db sink query vname = " + vname);
+   }
+
+   var  sinkNetQuery = sqlQueries.sinkQuery;
+   console.log("(D):  query=" + sinkNetQuery);
+   mysql.executeQuery(pool, sinkNetQuery, [runId, vname], function(err, tuples) {
+      if (err) {
+         console.err("(E):  could not retrieve data from query.");
+         res.json({code: "100", status: "Could not connect to db. " + err});
+         return;
+      }
+
+      console.log("(D):  returning sink data.");
+      res.json(tuples);
+   });
+});
+
+router.get('/aggs', function(req, res, next){
+	console.log("(D): gets aggs DB.");
+	if(req.query){
+		var sinkName = req.query.sinkName;
+		console.log("(D): db aggs query sink = " + sinkName);
+	}
+
+	var aggsQuery = sqlQueries.aggrsOnSinkQuery1+sqlQueries.aggrsOnSinkQuery2;
+	console.log("(D): query=" + aggsQuery);
+	mysql.executeQuery(pool, aggsQuery, [sinkName], function(err, tuples) {
+      if (err) {
+         console.err("(E):  could not retrieve data from query.");
+         res.json({code: "100", status: "Could not connect to db. " + err});
+         return;
+      }
+		console.log("aggs query done");
+		res.json(tuples);
+   });
+});
+
+//  TODO:  make this noise-specific as well.
+router.get('/runs', function(req, res, next) {
+   console.log("(D):  get runs DB. ");
+   //  Handle query parms
+   //  NOTE:  not expecting any parms.
+   if (req.query) {
+      var vname = req.query.vname;
+      console.log("(D):  db sink query vname = " + vname);
+   }
+
+   var  runsQuery = sqlQueries.runsQuery;
+   console.log("(D):  query=" + runsQuery);
+   mysql.executeQuery(pool, runsQuery, [vname], function(err, tuples) {
+      if (err) {
+         console.err("(E):  could not retrieve data from query.");
+         res.json({code: "100", status: "Could not connect to db. " + err});
+         return;
+      }
+
+      console.log("(D):  returning runs data.");
+      res.json(tuples);
+   });
+});
+
+// TimingAnalyzer routings
+//
+router.get('/path_page_query', function(req, res, next) {
+  console.log("(D):  Inside /path_page_query get function. ");
+
+  if (req.query) {
+    var endptfile = req.query.fileName;
+    var queryName = req.query.queryName;
+    var pathKey = 0, rowNum = -1;
+    var keys = "0", keysStr = "";
+    if (req.query.keys) { 
+      keys = req.query.keys
+      //for (i = 0; i < keys.length; i++) {
+      //  keysStr += (" " + keys[i].toString());
+      //}
+    }
+    if (req.query.pathKey) 
+      pathKey = req.query.pathKey;
+    if (req.query.rowNum)
+      rowNum = req.query.rowNum;
+  }
+  var pyScript = 'pathPageQueries.py';
+  var py3 = '/afs/eda/tools/bin/python3';
+  var pyexe = pyScript + ' -endpt ' + queryChosen + ' -keys ' + keys + ' -path_key ' + pathKey.toString() + ' -row_num ' + rowNum.toString();
+  var outfile = '/tmp/py1.json';
+  var queryChosen = '-' + queryName;
+  var options = {
+     mode: 'text',
+     pythonPath: '/afs/eda/tools/bin/python3',
+     pythonOptions: ['-u'],
+     scriptPath: './python/TimingAnalyzer',
+     args: ['-endpt', endptfile, queryChosen, '-keys', [keys], '-path_key', pathKey, '-row_num', rowNum]
+  };
+  console.log("(D): Query being executed = " + pyScript + " -endpt " + endptfile + " " + queryChosen + " -keys " + keys + " -path_key " + pathKey + " -row_num " + rowNum);
+
+  PythonShell.run(pyScript, options, function (err, results) {
+  //PythonShell.run(pyexe, function (err, results) {
+    if (err) throw err;
+    // results is an array consisting of messages collected during execution
+    //console.log('results: %j', results);
+    //var jsondata = require(outfile);
+    //console.log('JSON out: ', jsondata);
+    // res.send(jsondata);
+    //console.log("(D): Path data: " + results);
+    res.send(JSON.parse(results));
+    console.log("(D): Python shell execution of " + pyScript + " successful.");
+     /*
+    jsonfile.readFile(outfile, function(err, data) {
+      var jsonobj = JSON.parse(data);
+      console.log(jsonobj);
+      res.send(jsonobj);
+    });    
+    */
+  });
+});
+
+// Obtain summary info
+router.get('/main_page_query', function(req, res, next) {
+   console.log("(D):  Executing /main_page_query function. ");
+
+  if (req.query) {
+    var endptfile = req.query.fileName;
+    var queryName = req.query.queryName;
+    var numBuckets = 0;
+    if (req.query.numBuckets) 
+      numBuckets = req.query.numBuckets;
+  }
+  var outfile = './python/summary.json';
+  var queryChosen = '-' + queryName;
+  var pyScript = 'mainPageQueries.py';
+  var options = {
+     mode: 'text',
+     pythonPath: '/afs/eda/tools/bin/python3',
+     pythonOptions: ['-u'],
+     scriptPath: './python/TimingAnalyzer',
+     args: ['-endpt', endptfile, queryChosen, '-num_buckets', numBuckets]
+  };
+
+  console.log("(D): Query being executed = " + pyScript + " -endpt " + endptfile + " " + queryChosen + " -num_buckets " + numBuckets);
+
+  PythonShell.run(pyScript, options, function (err, results) {
+    if (err) throw err;
+    //console.log('results: %j', results);
+   // var jsondata = require(outfile);
+   // console.log('JSON out: ', jsondata);
+   // res.send(jsondata);
+    res.send(JSON.parse(results));
+    console.log("(D): Python shell execution of " + pyScript + " successful.");
+  });
+});          
+
+// Queries that support latch to latch analysis
+router.get('/lat2lat_query', function(req, res, next) {
+   console.log("(D):  Executing /lat2lat_query function. ");
+
+  if (req.query) {
+    var endptfile = req.query.fileName;
+    var queryName = req.query.queryName;
+    var sourceDefs = "%", sinkDefs = "%", sourcePins = "%", sinkPins = "%";
+    var minSlack = -1e15, maxSlack = 1e15;
+    if (req.query.sourceDefs) 
+      sourceDefs = req.query.sourceDefs;
+    if (req.query.sinkDefs) 
+      sinkDefs = req.query.sinkDefs;
+    if (req.query.sourcePins) 
+      sourcePins = req.query.sourcePins;
+    if (req.query.sinkPins) 
+      sinkPins = req.query.sinkPins;
+    if (req.query.minSlack) 
+      minSlack = req.query.minSlack;
+    if (req.query.maxSlack) 
+      maxSlack = req.query.maxSlack;
+  }
+  //var outfile = './python/summary.json';
+  var queryChosen = '-' + queryName;
+  var pyScript = 'lat2latAnal.py';
+  var options = {
+     mode: 'text',
+     pythonPath: '/afs/eda/tools/bin/python3',
+     pythonOptions: ['-u'],
+     scriptPath: './python/TimingAnalyzer',
+     args: ['-endpt', endptfile, queryChosen, '-source_defs', sourceDefs, '-sink_defs', sinkDefs, '-source_pins', sourcePins, '-sink_pins', sinkPins, '-min_slack', minSlack.toString(), '-max_slack', maxSlack.toString()]
+  };
+
+  console.log("(D): Query being executed = " + pyScript + " -endpt " + endptfile + " " + queryChosen + " -source_defs " + sourceDefs + " -sink_defs " + sinkDefs + " -source_pins " + sourcePins + " -sink_pins " + sinkPins + " -min_slack " + minSlack.toString() + " -max_slack " + maxSlack.toString());
+
+  PythonShell.run(pyScript, options, function (err, results) {
+    if (err) throw err;
+   // console.log('results: %j', results);
+   // var jsondata = require(outfile);
+   // console.log('JSON out: ', jsondata);
+   // res.send(jsondata);
+    res.send(JSON.parse(results));
+    console.log("(D): Python shell execution of " + pyScript + " successful.");
+  });
+});  
+
+//
+router.get('/paths', function(req, res, next) {
+   console.log("(D):  get paths DB. ");
+   if (req.query) {
+      //var runId     = req.query.runId;
+      var endptfile = req.query.fileName;
+      //console.log("(D):  db summary query runId= " + runId);
+   }
+   console.log("(D): Executing SQLite query...")
+   console.log("(D): Endpoint report = " + endptfile);
+   var db  = new sqlite3.Database(endptfile);
+   var query = "SELECT PATH_KEY, TEST_TYPE, PHASE, PIN_NAME, SLACK FROM ENDPT_SUMMARY ORDER BY SLACK ASC";
+   db.all(query, function(err, rows) {
+      if (err) {
+        res.json({code: "100", status: "SQLite error. " + err});
+      } else {
+       console.log("(D): SQLite query successful!");
+       //console.log("(D) SQLite output:");
+       //console.log(rows);
+       res.send(rows);
+      }    
+   });
+   db.close();      
+});
+
+router.get('/path_details', function(req, res, next) {
+   console.log("(D):  get paths_details DB. ");
+   if (req.query) {
+      //var runId = req.query.runId;
+      var endptfile =req.query.fileName;
+      var pathKey = req.query.pathKey;
+      console.log("(D):  db path details query fileName= " + endptfile + " with pathKey = " + pathKey);
+   }
+   console.log("(D): Executing SQLite ENDPT_PATH query...")
+   console.log("(D): Endpoint report = " + endptfile);
+   var db  = new sqlite3.Database(endptfile);
+   var query = "SELECT PATH_KEY, ROW_NUM, PATH_TYPE, PIN_NAME, EDGE, PHASE, AT, SLACK, SLEW FROM ENDPT_PATH WHERE PATH_KEY = " + pathKey;
+   db.all(query, function(err, rows) {
+      if (err) {
+        res.json({code: "100", status: "SQLite error. " + err});
+      } else {
+       res.json(rows);
+      }    
+   });
+   db.close(); 
+});
+
+router.get('/endpoint', function(req, res, next) {
+   console.log("(D):  get endpoint DB. ");
+   if (req.query) {
+      var endptfile =req.query.fileName;
+      var pathKey = req.query.pathKey;
+      var pinName = req.query.pinName;
+      var rowNum  = req.query.rowNum;
+      console.log("(D):  db endpoint details query pathKey= " + pathKey + ",  pinName = " + pinName + " and rowNum = " + rowNum);
+   }
+   console.log("(D): Executing SQLite ENDPT_PATH query for pin details...")
+   console.log("(D): Endpoint report = " + endptfile);
+   var db  = new sqlite3.Database(endptfile);
+   //var query = "SELECT PIN_NAME, EDGE, PHASE, AT, SLACK, SLEW, DELAY, ADJUST, CELL_NAME, NET_NAME, FO FROM ENDPT_PATH WHERE PATH_KEY = " + pathKey + " AND PIN_NAME LIKE '"+ pinName + "'";
+   var query = "SELECT PIN_NAME, EDGE, PHASE, AT, SLACK, SLEW, DELAY, ADJUST, CELL_NAME, NET_NAME, FO FROM ENDPT_PATH WHERE PATH_KEY = " + pathKey + " AND ROW_NUM = "+ rowNum ;
+   //var query = "SELECT PIN_NAME, EDGE, PHASE, AT, SLACK, SLEW, DELAY FROM ENDPT_PATH WHERE PIN_NAME LIKE '"+ pinName + "'";
+   console.log("(D): Executing query..." + query);
+   db.all(query, function(err, rows) {
+      if (err) {
+        res.json({code: "100", status: "SQLite error. " + err});
+      } else {
+       res.send(rows);
+      }    
+   });
+   db.close(); 
+});     
+//
+// TimingAnalyzer routings end
+
+// MSF Status routings
+//
+router.get('/scorecard', function(req, res, next) {
+    console.log("(D): inside MSF Status' scorecard routing.");
+    var fs = require('fs');
+    var obj;
+    var file = '/afs/apd.pok.ibm.com/u/sheraghu/vol1/edanalytics/sandboxes/sheraghu/dawn/python/LS_PRQ.json';
+    fs.readFile(file, 'utf8', function (err, data) {
+      if (err) {
+        throw err;
+      } else {
+        obj = JSON.parse(data);
+        res.send(obj);
+      }
+    });
+});
+
+//
+// MSF Status routings end
+//Bigbrother routings
+var couchDBViews = require('./app/couchDBViews');
+router.get('/memory', function(req, res, next) {
+   console.log("(D):  get memories from DB. ");
+   couchDBViews.getMemory(req, res);
+});
+router.get('/walltime', function(req, res, next) {
+   console.log("(D):  get walltimes from DB. ");
+   couchDBViews.getWalltime(req, res);
+});
+router.get('/memoryChart', function(req, res, next) {
+   console.log("(D):  get design max,min,avg from DB. ");
+   couchDBViews.getMemoryChart(req, res);
+});
+router.get('/walltimeChart', function(req, res, next) {
+   console.log("(D):  get design max,min,avg from DB. ");
+   couchDBViews.getWalltimeChart(req, res);
+});
+//Bigbrother routings ends
+
+
+/**  
+ *   This function will take a DOM object and stringify it. 
+ *   JSON.stringify does not handle objects with circular dependencies, which 
+ *   objects related to the DOM have. 
+ */
+var domJSONstring = function(object) {
+    var i = 0;
+
+    return function(key, value) {
+        if (i !== 0 && typeof(object) === 'object' && typeof(value) == 'object' && object == value)
+            return '[Circular Ref]';
+        if (i >= 29)
+            return '[Unknown -- Too many levels]';
+        i++;
+        return value;
+    }
+}
+
+// create a new express server
+var app = express();
+
+// Create an instance of LdapAuthenticator
+var ldapObj = new ldapAuthModule.LdapAuthenticator();
+ldapObj.initialize(app);
+
+// Create a new DawnAuthentocator instance.
+var dawnBlueGroupAuth = new bluegroupAuthModule.DawnAuthenticator();
+
+//------------------------------------------------------------------------------
+// Two level authentication 
+// 1. LDAP auth -- authenticate using intranet credentials.
+//    See: http://passportjs.org/docs/authenticate for API docs
+// 2. Bluegroup validation: 
+//    Once the user has successfully authenticated with the intranet 
+//    credentials. The next level of security is to make sure 
+//    the userid is in one of the bluegroups. The module DawnAuthenticator.js 
+//    adds this capability. 
+//
+// The authentication order can be interchanged. i.e. you can call blue group 
+// authentication code before the intranet auth. 
+//------------------------------------------------------------------------------
+
+dawnRouter.post(
+  '/auth_login',
+
+  // First check if intranet credentials are OK
+  ldapObj.passport.authenticate('ldapauth', {session:'true'}),
+
+  function ldapValidator(req, res, next) {        
+        
+        console.log("(D): intranet id validation route, res.statusCode:", 
+                     res.statusCode);
+
+        // StatusCode of 200 indicates success.. the intranet credentials 
+        // are valid. Call the next() promise which then does the next level 
+        // of authentication by verifying bluegroup membership 
+        //(see next function)
+        if (res.statusCode == 200) {
+          next();
+        }
+        else {
+          // The authentication failed at the first step itself. Send the 
+          // status code to the client code 
+          // See authService.login in loginCtrl.js
+          res.status(statusCode).send("not_ok");
+        }          
+  }, // end of function ldapValidator
+  function bluegroupValidator(req,res){
+    // This function is called if next() is executed in the above code.
+
+    console.log("(D): in dawnRouter.post, req.body.username=", req.body.username);
+    console.log("(D): in the next() route, validating bluegroup membership...");
+    
+    // Do the bluegroup vaidation. See app/Auth/DawnAuthenticator.js
+    dawnBlueGroupAuth.validate(req.body.username, getStatus);
+
+    /**
+      Function: getStatus
+      Decription: This function is provided as a callback to the DawnAuthenticator
+         to get the return code and the message.
+      @param {number} statusCode The return code (rc) from the bluegroup request
+      @param {string} message  Message on what the return code means
+    */
+    function getStatus(statusCode, message) {
+        console.log("in getStatus");
+        console.log("--------------------------------");
+        console.log("Message:", message);
+        console.log("Status:", statusCode);
+        console.log("--------------------------------"); 
+
+        // Finally send the status code to the client 
+        // See authService.login in loginCtrl.js
+        res.status(statusCode).send(message);
+    };
+    
+  } // end of function bluegroupValidator 
+           
+); // end of dawnRouter.post
+
+// serve the files out of ./public as our main files
+app.use(express.static(__dirname + '/public'));
+app.use('/bower_components', express.static(__dirname + '/bower_components'));
+app.use('/DB', router);
+app.use('/DAWN', dawnRouter);
+
+
+var host = "0.0.0.0";
+var port = 8080;
+
+// start server on the specified port and binding host TODO - make port and host variables
+/*
+app.listen(port, host, function() {
+
+  // print a message when the server starts listening
+  //console.log("server starting on " + appEnv.url);
+  console.log("server is up on " + host +":" + port + "'");
+});
+*/
+
+//comment out the following lines when you are running the application on your sandbox
+
+var fs = require('fs');
+var http = require('http');
+var https = require('https');
+
+//var serverKeyPath    = '/afs/eda/u/rwt/public/forAarthi/certs/server.key';
+//var serverCertifPath = '/afs/eda/u/rwt/public/forAarthi/certs/server.crt';
+var serverKeyPath    = '/afs/apd.pok.ibm.com/projects/edanalytics/sandboxes/rwt/ssl/key_nopass.pem';
+var serverCertifPath = '/afs/apd.pok.ibm.com/projects/edanalytics/sandboxes/rwt/ssl/cert.pem';
+
+var sslKey  = fs.readFileSync(serverKeyPath, 'utf8');
+var sslCertificate = fs.readFileSync(serverCertifPath, 'utf8');
+var sslCredentials = {key: sslKey, cert: sslCertificate};
+
+//var httpServer = http.createServer(app);
+var httpsServer = https.createServer(sslCredentials, app).listen(port, host, function() {
+   console.log("server is up on " + host + ":" + port + "'");                                                                 
+  } 
+);
+
+//httpServer.listen(8080);
+//httpsServer.listen(8443);
+
+//comment out till here when you are running the application on your sandbox

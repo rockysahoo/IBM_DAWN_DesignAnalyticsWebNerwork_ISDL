@@ -1,0 +1,18 @@
+
+	<div class = "leftTitle">
+    	Select view
+    </div>
+	<br>
+    <!-- <div ui-grid="pathGrid" ui-grid-selection ui-grid-resize-columns class="summaryTable">  -->
+    <!-- </div>  -->
+    <div ng-controller="dropDownMenu">
+      <form name="viewForm">
+        <label for="viewSelect"> Views: </label><br>
+        <select name="viewSelect" ng-model="data.viewSelect">
+          <option value="option-1">Scorecard</option>
+          <option value="option-2">Takedown</option>
+          <option value="option-3">Progress</option>
+          <option value="option-4">Activity</option>
+        </select><br> 
+      </form>     
+    </div>

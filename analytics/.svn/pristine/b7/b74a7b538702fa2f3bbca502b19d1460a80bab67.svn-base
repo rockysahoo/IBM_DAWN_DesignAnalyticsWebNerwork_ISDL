@@ -1,0 +1,70 @@
+<head>
+	<link rel="stylesheet" href="stylesheets/MSF-style.css">
+    <style>
+       .scrollBar {
+         max-width:1650px;
+         overflow-x: auto;
+         max-height:700px;
+         overflow-y: auto;
+       }
+    </style>    
+</head>
+
+<div>
+    <div class="topBar" ng-include src ="'views/DAWN/topBar.html'" ng-controller="topCtrl">
+    </div>    
+
+    <div ng-style="{'background-color':'white'}" >
+        <div class="scrollBar">
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="jumbotron">
+                        <center >
+                            <form class="form-inline" role="form">
+                                <div class="form-group row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <div class="col-md-4">
+                                                <label for="selectDesign" class="col-md-4 control-label">Design</label>
+                                                <select id="selectDesign" class="form-control input-lg mrgn-bttm-md" ng-model="designChosen" ng-change="changeDesign()" ng-init="initDesign()">
+                                                  <option ng-repeat="option in MSFData.designList" value="{{option.name}}">{{option.name}}</option>
+                                                </select>
+                                            </div>      
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-4">
+                                                <label for="selectRole" class="col-md-4 control-label">Role</label>
+                                                <select id="selectRole" class="form-control input-lg mrgn-bttm-md" ng-model="roleChosen" ng-change="changeRole()" ng-init="initRole()">
+                                                  <option ng-repeat="option in MSFData.roleList" value="{{option.name}}">{{option.name}}</option>
+                                                </select>
+                                            </div>      
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-4">
+                                                <label for="selectView" class="col-md-4 control-label">View</label>
+                                                <select id="selectView" class="form-control input-lg mrgn-bttm-md" ng-model="viewChosen" ng-change="changeApp()" ng-init="initView()">
+                                                  <option ng-repeat="option in MSFData.viewList" value="{{option.name}}">{{option.name}}</option>
+                                              </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </center>
+                    </div> <!-- div jumbotron -->
+                </div> <!-- div row -->
+                <div class="row"> <center>
+                    <div class="col-sm-6">
+                        <div ng-style="{'background-color':'white'}" donut-chart donut-data='[ {label: "Download Sales", value: 12}, {label: "In-Store Sales",value: 30}, {label: "Mail-Order Sales", value: 20} ]'
+                             donut-colors='["#31C0BE","#c7254e","#98a0d3"]' donut-formatter='"currency"'>
+                        </div>
+                    </div>
+                </center></div>
+                </div>
+            </div> <!-- div col-sm-12 -->
+        </div> <!-- div scrollBar -->
+    </div> <!-- div ng-style -->
+</div>
+
+
+

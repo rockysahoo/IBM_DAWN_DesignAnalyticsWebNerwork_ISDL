@@ -1,0 +1,18 @@
+
+<div class = "rightFrame">
+	<br>
+	<div class = "leftTitle">
+		Path chosen: {{selectedPath.PIN_NAME}}, {{selectedPath.TEST_TYPE}}, {{selectedPath.PHASE}} 
+	</div>
+	<br>
+	<div ui-grid="pathDetailsGrid" ui-grid-selection ui-grid-resize-columns class="pathTable">
+	</div>
+	<br>
+	<hr>
+	<div class ="leftTitle">
+		Pin details
+	</div>
+	<br>
+	<div ui-grid="endPointDetailsGrid" ui-grid-resize-columns class="endPointDetails">
+	</div>
+</div>

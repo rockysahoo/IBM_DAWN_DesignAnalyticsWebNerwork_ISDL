@@ -1,0 +1,21 @@
+<!-- Update History
+10/13/15	aparasur	linked big brother to open up from dawn portal
+-->
+
+<div ng-include src ="'views/DAWN/topBar.html'" ng-controller="topCtrl">
+</div>
+<div class = "background">
+    <div class = "portal">
+
+        <button ng-click="open('Noise Inspector')" class ="bigButton">Noise Inspector</button>
+        <button ng-click="open('Timing Analyzer')" class ="bigButton">Timing Analyzer</button>
+        <button ng-click="open('MSF Status')" class ="bigButton">MSF Status</button>
+        <!-- <button class   ="bigButton">Timing Analyzer</button> -->
+        <!-- <button class   ="bigButton">MSF Status</button> -->
+        <button ng-click="goBigBrother()" class ="bigButton">Big Brother</button>
+        <br>
+
+    </div> 
+    <img src="images/dawnLogo.png" class ="dawnLogo"></img>
+</div>
+
